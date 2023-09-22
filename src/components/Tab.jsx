@@ -2,6 +2,20 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Button } from "./Button";
 import { View } from "./View";
 import PropTypes from "prop-types";
+import styled from "styled-components";
+import { background } from "styled-system";
+
+const Circle = styled.div`
+  ${background}
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: 2px;
+`;
+
+Circle.propTypes = {
+  background: "",
+};
 
 const Tab = ({
   selectedIndex,
@@ -30,21 +44,25 @@ const Tab = ({
     return options.map((option, index) => {
       return (
         <Button
-          type={index === selectedTab ? "primary" : "white"}
+          type={index === selectedTab ? "selected" : "white"}
           onClick={() => {
             setSelectedTab(index);
             onChange && onChange(index);
           }}
           key={index}
-          backgroundColor="white"
-          borderRadius={getBorderRadius(
-            index === 0,
-            index === options.length - 1
-          )}
-          width={width}
-          style={{ whiteSpace: "nowrap" }}
+          backgroundColor="transparent"
+          borderRadius={"4px"}
+          width={"95px"}
+          style={{
+            whiteSpace: "nowrap",
+            color: index === selectedTab ? "white" : "#00000099",
+          }}
+          flexDirection="column"
+          fontSize="18px"
+          mr={40}
         >
           {option.label}
+          <Circle background={option.color} />
         </Button>
       );
     });

@@ -13,9 +13,10 @@ const MessageWrapper = styled.div`
   text-align: left;
   margin: 0;
   margin-bottom: 2rem;
-  font-size: 1rem;
-  font-family: "Montserrat";
+  font-size: 24px;
+  font-family: "Roboto";
   vertical-align: middle;
+  opacity: 0.6;
 
   ${({ theme }) => css`
     color: ${theme.colors.error};
@@ -36,6 +37,10 @@ const Wrapper = styled.label`
   ${space}
 
   width: 100%;
+  background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  opacity: 1;
 
   ${({ theme, label, error }) =>
     Boolean(label) &&
@@ -62,55 +67,51 @@ const Wrapper = styled.label`
     ${flexbox}
     ${space}
 
-    ${({ theme, error }) => css`
-      background-color: ${theme.colors.secondary};
-      padding: 0.5rem;
-      border: 0.25rem solid;
-      border-color: ${error ? theme.colors.error : theme.colors.darkGray};
-      color: ${error ? theme.colors.error : theme.colors.darkGray};
-
-      &:hover,
-      &:focus {
-        border: 0.25rem solid ${theme.colors.primary};
-      }
-    `}
+    background: transparent;
+    border: 0;
+    margin-left: 15px;
   }
 `;
 
 Wrapper.defaultProps = {
-  fontSize: "2rem",
-  fontFamily: "Montserrat",
-  fontWeight: "bold",
-  color: "black",
-  width: "20rem",
+  fontSize: "24px",
+  fontFamily: "Roboto",
+  fontWeight: "normal",
+  color: "#00000099",
+  width: "824px",
   error: false,
+  height: "46px",
 };
 
-const Input = React.forwardRef(({ children, error, message, ...rest }, ref) => {
-  const [value, setValue] = useState("");
-  const onChange = (e) => {
-    setValue(e.target.value);
-  };
+const Input = React.forwardRef(
+  ({ children, error, message, icon, ...rest }, ref) => {
+    const [value, setValue] = useState("");
+    const onChange = (e) => {
+      setValue(e.target.value);
+    };
 
-  return (
-    <Fragment>
-      <View>
-        <Wrapper label={children} ref={ref} error={error}>
-          <input value={value} onChange={onChange} {...rest} />
-        </Wrapper>
-        {error && (
-          <MessageWrapper>
-            <ErrorOutlineIcon className="message-icon" color="error" />
-            {message}
-          </MessageWrapper>
-        )}
-      </View>
-    </Fragment>
-  );
-});
+    return (
+      <Fragment>
+        <View>
+          <Wrapper label={children} ref={ref} error={error}>
+            {icon !== "" ? icon : ""}
+            <input value={value} onChange={onChange} {...rest} />
+          </Wrapper>
+          {error && (
+            <MessageWrapper>
+              <ErrorOutlineIcon className="message-icon" color="error" />
+              {message}
+            </MessageWrapper>
+          )}
+        </View>
+      </Fragment>
+    );
+  }
+);
 
 Input.defaultProps = {
   children: "",
+  icon: "",
 };
 
 export { Input };
