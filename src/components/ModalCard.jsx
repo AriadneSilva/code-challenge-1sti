@@ -67,35 +67,6 @@ const ModalWrapper = styled.div`
   }
 `;
 
-const CloseWrapper = styled.button`
-  outline: 0;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.2s ease;
-  border: none;
-  height: 4rem;
-  width: 4rem;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  ${({ theme }) => css`
-    color: ${theme.colors.gray};
-    box-shadow: 0rem 0.2rem 0.45rem rgba(0, 0, 0, 0.132);
-
-    &:hover {
-      color: ${theme.colors.danger};
-      box-shadow: 0px 0.8rem 1.8rem rgba(0, 0, 0, 0.12);
-    }
-  `}
-
-  svg {
-    width: 2rem;
-    height: 2rem;
-  }
-`;
-
 const Card = (props) => {
   return <CardWrapper {...props}>{props.children}</CardWrapper>;
 };
@@ -148,19 +119,6 @@ const Modal = ({ isOpen, onModalExit, ...rest }) => {
   );
 };
 
-const CloseButton = (props) => {
-  return (
-    <CloseWrapper {...props}>
-      <svg viewBox="0 0 16 16" fill="none">
-        <path
-          d="M0.585786 12.5858C-0.195262 13.3668 -0.195262 14.6332 0.585786 15.4142C1.36683 16.1953 2.63317 16.1953 3.41421 15.4142L0.585786 12.5858ZM15.4142 3.41421C16.1953 2.63317 16.1953 1.36683 15.4142 0.585786C14.6332 -0.195262 13.3668 -0.195262 12.5858 0.585786L15.4142 3.41421ZM12.5858 15.4142C13.3668 16.1953 14.6332 16.1953 15.4142 15.4142C16.1953 14.6332 16.1953 13.3668 15.4142 12.5858L12.5858 15.4142ZM3.41421 0.585786C2.63317 -0.195262 1.36683 -0.195262 0.585786 0.585786C-0.195262 1.36683 -0.195262 2.63317 0.585786 3.41421L3.41421 0.585786ZM3.41421 15.4142L9.41421 9.41421L6.58579 6.58579L0.585786 12.5858L3.41421 15.4142ZM9.41421 9.41421L15.4142 3.41421L12.5858 0.585786L6.58579 6.58579L9.41421 9.41421ZM6.58579 9.41421L12.5858 15.4142L15.4142 12.5858L9.41421 6.58579L6.58579 9.41421ZM9.41421 6.58579L3.41421 0.585786L0.585786 3.41421L6.58579 9.41421L9.41421 6.58579Z"
-          fill="currentColor"
-        />
-      </svg>
-    </CloseWrapper>
-  );
-};
-
 const ModalCard = ({
   children,
   title,
@@ -180,10 +138,8 @@ const ModalCard = ({
           alignSelf="stretch"
           alignItems="center"
           justifyContent="space-between"
-          mb={3}
         >
           <Text type="h3">{title}</Text>
-          <CloseButton onClick={onClose} />
         </View>
         {children}
       </Card>
@@ -197,11 +153,11 @@ Card.defaultProps = {
   flexDirection: "column",
   alignItems: "flex-start",
   justifyContent: "flex-start",
-  fontFamily: "Montserrat",
+  fontFamily: "Roboto",
   fontSize: 2,
   border: "none",
   boxShadow: "low",
-  borderRadius: "card",
+  borderRadius: "4px",
 };
 
 Modal.defaultProps = {

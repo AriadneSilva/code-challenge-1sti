@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     margin: 0px;
-    font-family: Montserrat;
+    font-family: Roboto;
   }
 
 

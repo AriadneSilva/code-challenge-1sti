@@ -1,6 +1,13 @@
 import React, { Fragment, useState } from "react";
 import styled, { css } from "styled-components";
-import { space, color, typography, layout, flexbox } from "styled-system";
+import {
+  space,
+  color,
+  typography,
+  layout,
+  flexbox,
+  background,
+} from "styled-system";
 import get from "lodash.get";
 
 const MessageWrapper = styled.div`
@@ -9,7 +16,7 @@ const MessageWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   text-align: left;
-  font-size: ${({ theme }) => get(theme, "fontSizes.1")};
+  font-size: 16px;
   margin: 0;
   margin-bottom: 2rem;
   font-family: "Roboto";
@@ -63,9 +70,9 @@ const Wrapper = styled.label`
     ${layout}
     ${flexbox}
     ${space}
+    ${background}
 
     ${({ theme, success, warning, error }) => css`
-      background-color: ${get(theme, "colors.white", "white")};
       padding: ${get(theme, "parameters.inputPadding", "8px 16px")};
       border: ${get(theme, "borders.input", "2px solid")};
       border-color: ${success
@@ -78,7 +85,7 @@ const Wrapper = styled.label`
       border-radius: ${get(theme, "radii.input", "4px")};
 
       &::placeholder {
-        color: ${get(theme, "colors.lightGray", "#E0E0E0")};
+        color: ${get(theme, "colors.lightGray", "#00000099")};
       }
 
       &:hover,
@@ -87,10 +94,11 @@ const Wrapper = styled.label`
       }
     `}
 
-    ${({ width }) =>
+    ${({ width, height }) =>
       width &&
       css`
         width: ${width};
+        height: ${height};
       `}
 
     ${({ disabled }) =>
@@ -104,9 +112,10 @@ const Wrapper = styled.label`
 
 Wrapper.defaultProps = {
   fontFamily: "Roboto",
-  fontSize: 1,
+  fontSize: "24px",
   color: "black",
   width: "-webkit-fill-available",
+  height: "227px",
 };
 
 const TextArea = React.forwardRef(
@@ -124,6 +133,7 @@ const TextArea = React.forwardRef(
       width,
       rows,
       cols,
+      background,
       ...rest
     },
     ref
@@ -143,6 +153,7 @@ const TextArea = React.forwardRef(
           success={success}
           error={error}
           warning={warning}
+          background={background}
         >
           <textarea
             value={value}
@@ -169,6 +180,7 @@ TextArea.defaultProps = {
   searchable: false,
   rows: 4,
   cols: 50,
+  background: "white",
 };
 
 export { TextArea };

@@ -1,6 +1,13 @@
 import React, { Fragment, useState } from "react";
 import styled, { css } from "styled-components";
-import { space, color, typography, layout, flexbox } from "styled-system";
+import {
+  space,
+  color,
+  typography,
+  layout,
+  flexbox,
+  background,
+} from "styled-system";
 import _ from "lodash";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { View } from "./View";
@@ -37,10 +44,10 @@ const Wrapper = styled.label`
   ${space}
 
   width: 100%;
-  background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-  background: #ffffff 0% 0% no-repeat padding-box;
+  //background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   opacity: 1;
+  ${background}
 
   ${({ theme, label, error }) =>
     Boolean(label) &&
@@ -66,8 +73,9 @@ const Wrapper = styled.label`
     ${layout}
     ${flexbox}
     ${space}
+    ${background}
 
-    background: transparent;
+
     border: 0;
     margin-left: 15px;
   }
@@ -78,13 +86,17 @@ Wrapper.defaultProps = {
   fontFamily: "Roboto",
   fontWeight: "normal",
   color: "#00000099",
-  width: "824px",
+  width: "20rem",
   error: false,
   height: "46px",
+  background: "transparent",
 };
 
 const Input = React.forwardRef(
-  ({ children, error, message, icon, ...rest }, ref) => {
+  (
+    { children, error, message, icon, width, color, background, ...rest },
+    ref
+  ) => {
     const [value, setValue] = useState("");
     const onChange = (e) => {
       setValue(e.target.value);
@@ -93,7 +105,14 @@ const Input = React.forwardRef(
     return (
       <Fragment>
         <View>
-          <Wrapper label={children} ref={ref} error={error}>
+          <Wrapper
+            label={children}
+            ref={ref}
+            error={error}
+            width={width}
+            color={color}
+            background={background}
+          >
             {icon !== "" ? icon : ""}
             <input value={value} onChange={onChange} {...rest} />
           </Wrapper>

@@ -10,6 +10,7 @@ import {
   border,
   shadow,
   grid,
+  background,
 } from "styled-system";
 import get from "lodash.get";
 
@@ -26,6 +27,7 @@ const Wrapper = styled.div`
   ${grid}
   ${border}
   ${shadow}
+  ${background}
 
   ${({ theme, onClick }) =>
     onClick &&
@@ -58,6 +60,7 @@ Card.defaultProps = {
   border: "none",
   boxShadow: "low",
   borderRadius: "card",
+  background: "white",
 };
 
 export { Card };

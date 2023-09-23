@@ -9,7 +9,7 @@ export default {
         secondary: '#F5F5F5',
         selected: '#69BCFF',
         accent: '#E7E5D8',
-        darkGray: '#2B2B2B',
+        darkGray: '#00000099',
         gray: '#F5F5F5',
         success: '#59e480',
         error: '#fb7171',

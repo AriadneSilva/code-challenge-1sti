@@ -24,8 +24,12 @@ const Text = styled.span`
       },
       h3: {
         fontSize: 1,
-        fontWeight: "bold",
+        fontWeight: "normal",
         lineHeight: "4.5rem",
+        color: "#00000099",
+        textAlign: "left",
+        letterSpacing: "0px",
+        opacity: "0.8",
       },
       small: {
         fontSize: "1rem",
@@ -56,6 +60,21 @@ const Text = styled.span`
         fontSize: "2.5rem",
         textTransform: "uppercase",
         fontWeight: "bold",
+      },
+      noteTitle: {
+        color: "white",
+        fontSize: "20px",
+        fontWeight: "bold",
+      },
+      noteDescription: {
+        color: "white",
+        fontSize: "14px",
+        fontWeight: "normal",
+      },
+      noteDaten: {
+        color: "white",
+        fontSize: "54px",
+        fontWeight: "normal",
       },
     },
   })}
