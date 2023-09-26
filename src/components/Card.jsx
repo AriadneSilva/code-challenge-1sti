@@ -11,7 +11,6 @@ import {
   shadow,
   grid,
   background,
-  flexDirection,
 } from "styled-system";
 import get from "lodash.get";
 
