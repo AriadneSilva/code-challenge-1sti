@@ -66,6 +66,7 @@ const ListNotes = () => {
               {filteredNotesList.map((note, i) => {
                 return (
                   <Card
+                    key={i}
                     background={
                       note.category === "1"
                         ? theme.colors.homeColor

@@ -66,8 +66,6 @@ export const NotesProvider = ({ children }) => {
 
   const [notesList, setNotesList] = useState([]);
 
-  localStorage.setItem("arrayNotes", JSON.stringify(notesList));
-
   const newNote = () => {
     setNotesObj({
       id: null,
