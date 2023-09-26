@@ -175,14 +175,14 @@ const Button = React.forwardRef((props, ref) => {
 
 Button.defaultProps = {
   display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "center",
+  flexdirection: "row",
+  alignitems: "center",
+  justifycontent: "center",
   fontFamily: "Roboto",
   fontWeight: "normal",
   border: "none",
-  boxShadow: "low",
-  borderRadius: "button",
+  boxshadow: "low",
+  borderradius: "button",
   type: "default",
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 
 //UTILS
-import { ThemeProvider } from "./TheneProvider";
+import { ThemeProvider } from "./ThemeProvider";
 import theme from "./theme";
 import Router from "./Router";
 

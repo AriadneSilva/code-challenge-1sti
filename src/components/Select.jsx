@@ -78,7 +78,7 @@ const Wrapper = styled.label`
     border: 0px;
 
     ${({ theme, error }) => css`
-      background-color: ${theme.colors.secondary};
+      background-color: ${get(theme, "colors.secondary}", "#F5F5F5")};
       padding: 0.5rem;
 
       &: hover;

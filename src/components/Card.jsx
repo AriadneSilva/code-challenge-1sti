@@ -11,13 +11,14 @@ import {
   shadow,
   grid,
   background,
+  flexDirection,
 } from "styled-system";
 import get from "lodash.get";
 
 const Wrapper = styled.div`
   transition: all 0.2s ease;
   ${({ theme }) => css`
-    padding: "${get(theme, "parameters.cardPadding", "16px")}";
+    padding: ${get(theme, "parameters.cardPadding", "16px")};
   `}
   ${space}
   ${color}
@@ -28,6 +29,8 @@ const Wrapper = styled.div`
   ${border}
   ${shadow}
   ${background}
+
+
 
   ${({ theme, onClick }) =>
     onClick &&
@@ -58,8 +61,8 @@ Card.defaultProps = {
   fontFamily: "Roboto",
   fontSize: 2,
   border: "none",
-  boxShadow: "low",
-  borderRadius: "card",
+  boxshadow: "low",
+  borderradius: "card",
   background: "white",
 };
 
