@@ -51,6 +51,8 @@ const Tab = ({
           }}
           flexDirection="column"
           fontSize="18px"
+          alignItems="center"
+          justifyContent="center"
           mr={40}
         >
           {option.label}

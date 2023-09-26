@@ -33,6 +33,7 @@ const TooltipConfirmation = ({ reference, idNote }) => {
         <br />
         <br />
         <button
+          data-testid={`btnCancelDeleteNote-${idNote}`}
           onClick={() => {
             onCancel();
           }}
@@ -46,6 +47,7 @@ const TooltipConfirmation = ({ reference, idNote }) => {
         </button>
         &ensp;
         <button
+          data-testid={`btnDeleteNote-${idNote}`}
           onClick={() => {
             onDelete();
           }}

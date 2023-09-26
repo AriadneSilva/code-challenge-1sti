@@ -17,6 +17,14 @@ const Text = styled.span`
         lineHeight: "10rem",
         textTransform: "uppercase",
       },
+      h2: {
+        fontSize: "34px",
+        fontWeight: "normal",
+        color: "#00000099",
+        textAlign: "left",
+        letterSpacing: "0px",
+        opacity: "0.6",
+      },
       h3: {
         fontSize: 1,
         fontWeight: "normal",

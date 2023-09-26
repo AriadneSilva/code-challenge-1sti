@@ -60,12 +60,14 @@ const Home = () => {
           <Tab
             options={tabOptions}
             selectedIndex={0}
+            data-testid="tabNotes"
             onChange={(e) => onChangeTab(e)}
           />
 
           <Button
             type="primary"
             width="128px"
+            data-testid="btnNewNote"
             onClick={() => {
               newNote();
             }}

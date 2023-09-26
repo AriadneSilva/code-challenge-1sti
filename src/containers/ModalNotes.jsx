@@ -19,6 +19,8 @@ const ModalNotes = () => {
     startValidation,
   } = useContext(NotesContext);
 
+  console.log("Nota que vou editar", notesObj, parseInt(notesObj.category));
+
   const onChangeNotesInfo = (e) => {
     const stateNoteObj = {
       ...notesObj,
@@ -64,9 +66,10 @@ const ModalNotes = () => {
           options={noteOptions}
           width="247px"
           name="category"
+          data-testid="category"
           onChange={onChangeNotesInfo}
           selectedValue={2}
-          value={parseInt(notesObj.category)}
+          defaultValue={notesObj.category || ""}
           error={startValidation && !notesObj.category}
           message={
             startValidation && !notesObj.category ? "Preencha o campo" : ""
@@ -83,6 +86,7 @@ const ModalNotes = () => {
         <TextArea
           background="#F4F4F4"
           height="227px"
+          data-testid="description"
           placeholder="Add descripton..."
           onChange={onChangeNotesInfo}
           name="description"
@@ -102,6 +106,7 @@ const ModalNotes = () => {
       >
         <Button
           backgroundColor="transparent"
+          data-testid="btnCancelNote"
           style={{
             color: "#2196F3",
           }}
@@ -113,6 +118,7 @@ const ModalNotes = () => {
         </Button>
         <Button
           backgroundColor="transparent"
+          data-testid="btnSaveNote"
           style={{
             color: "#2196F3",
           }}
