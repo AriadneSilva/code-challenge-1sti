@@ -49,7 +49,7 @@ const ListNotes = () => {
     <>
       <View width="-webkit-fill-available" alignItems="center">
         <View
-          width="120%"
+          width="107%"
           height="calc(100vh - 22rem)"
           style={{
             overflowX: "auto",
