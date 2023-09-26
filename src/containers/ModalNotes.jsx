@@ -19,7 +19,6 @@ const ModalNotes = () => {
     startValidation,
   } = useContext(NotesContext);
 
-  console.log("Nota que vou editar", notesObj, parseInt(notesObj.category));
 
   const onChangeNotesInfo = (e) => {
     const stateNoteObj = {
