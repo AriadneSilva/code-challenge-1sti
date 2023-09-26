@@ -15,10 +15,22 @@ export default {
         error: '#fb7171',
         danger: '#fb7171',
         white: '#ffffff',
-        offWhite: '#f5f5f5',
+        progress: '#69bcff96',
         homeColor:"#FF9100",
         workColor:"#5C6BC0",
-        personalColor:"#66BB6A"
+        personalColor:"#66BB6A",
+        transparent:"transparent"
     },
     fontSizes: ['1.75rem', '2rem', '2.5rem', '3rem', '4.5rem', '8rem'],
+    parameters:{
+        cardPadding: "16px",
+        inputLabelMargin:"4px",
+        inputPadding: "8px 16px"
+    },
+    borders:{
+        input: "2px solid"
+    },
+    radio:{
+        input:"4px"
+    }
 }

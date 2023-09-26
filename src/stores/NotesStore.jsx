@@ -1,41 +1,17 @@
-import React, { createContext, useEffect, useState } from "react";
-
-import get from "lodash.get";
-
-// //API
-// import main from '../api/main'
-
-// //COMPONENTS
-import { LoadingOverlay } from "../components/LoadingOverlay";
+import React, { createContext, useEffect, useState, useMemo } from "react";
 
 import { ListNotes } from "../containers/ListNotes";
-// //UTILS
-// import moment from 'moment'
-// import _ from 'lodash'
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 export const NotesContext = createContext();
 export const NotesProvider = ({ children }) => {
-  const navigate = useNavigate();
-
-  //STATES
-  //Customer information
-  // const [customerList, setCustomerList] = useState(null)
-  // const [customerObj, setCustomerObj] = useState({
-  //     rg: null,
-  //     dataEmissao: null,
-  //     orgaoExpedidor: null,
-  //     sexo: null
-  // })
-  // const [selectedCustomer, setSelectedCustomer] = useState(null)
-
-  //State controllers
-  // const [isEditing, setIsEditing] = useState(false)
-  // const [startValidation, setStartValidation] = useState(false)
-  const [isLoading, setLoading] = useState(false);
-  // const [validForm, setValidForm] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
+  const [startValidation, setStartValidation] = useState(false);
+  const [validModal, setValidModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [readNotes, setReadNotes] = useState(0);
+  const [filteredValue, setFilteredValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const tabOptions = [
     {
@@ -44,17 +20,17 @@ export const NotesProvider = ({ children }) => {
     },
     {
       label: "Home",
-      content: <div>Mostrar notas de home</div>,
+      content: <ListNotes />,
       color: "#FF9100",
     },
     {
       label: "Work",
-      content: <div>Mostrar notas de work</div>,
+      content: <ListNotes />,
       color: "#5C6BC0",
     },
     {
       label: "Personal",
-      content: <div>Mostrar notas de personal</div>,
+      content: <ListNotes />,
       color: "#66BB6A",
     },
   ];
@@ -66,15 +42,15 @@ export const NotesProvider = ({ children }) => {
       disabled: true,
     },
     {
-      value: 1,
+      value: "1",
       label: "Home",
     },
     {
-      value: 2,
+      value: "2",
       label: "Work",
     },
     {
-      value: 3,
+      value: "3",
       label: "Personal",
     },
   ];
@@ -92,10 +68,6 @@ export const NotesProvider = ({ children }) => {
 
   localStorage.setItem("notesList", JSON.stringify(notesList));
 
-  //Backend data
-  // const [orgaosExpedidoresList, setOrgaosExpedidoresList] = useState(null)
-
-  //CUSTOMER MANAGEMENT METHODS
   const newNote = () => {
     setNotesObj({
       id: null,
@@ -105,158 +77,106 @@ export const NotesProvider = ({ children }) => {
       date: null,
       read: false,
     });
-    // setIsEditing(false)
-    // setStartValidation(false)
-    navigate("/");
+    setIsEditing(false);
+    setStartValidation(false);
+    setShowModal(true);
   };
 
-  // const onEditCustomer = (customer) => {
-  //     setIsEditing(true)
-  //     setCustomerObj({ ...customer })
-  //     navigate("/")
-  // }
-
-  // const onConfirmDeleteCustomer = (customer) => {
-  //     setSelectedCustomer(customer)
-  //     setShowModal("confirmDeleteCustomer")
-  // }
-
-  // const onCancelDeleteCustomer = () => {
-  //     setSelectedCustomer(null)
-  //     setShowModal(false)
-  // }
-
-  // //BACKEND REQUESTS
-  // const submitForm = () => new Promise((resolve, reject) => {
-  //     if (!startValidation) {
-  //         setStartValidation(true)
-  //     }
-
-  //     if (validForm) {
-  //         setLoading(true)
-  //         if (isEditing) {
-  //             main.updateCustomer(customerObj).then(data => {
-  //                 toast.success(data.message)
-  //                 setStartValidation(false)
-  //                 resolve()
-  //             }).catch(error => {
-  //                 toast.error(error)
-  //                 reject(error)
-  //             }).finally(() => {
-  //                 setLoading(false)
-  //             })
-  //         }
-  //         else {
-  //             main.addCustomer(customerObj).then(data => {
-  //                 toast.success(data.message)
-  //                 setStartValidation(false)
-  //                 setCustomerObj({
-  //                     rg: null,
-  //                     dataEmissao: null,
-  //                     orgaoExpedidor: null,
-  //                     sexo: null
-  //                 })
-  //                 resolve()
-  //             }).catch(error => {
-  //                 toast.error(error)
-  //                 reject(error)
-  //             }).finally(() => {
-  //                 setLoading(false)
-  //             })
-  //         }
-  //     }
-  // })
-
-  const addNote = () => {
-    console.log(
-      "Minha lista antes",
-      notesList,
-      "meu objeto de agora",
-      notesObj
-    );
-    setNotesList([...notesList, notesObj]);
-    console.log(
-      "Minha lista depois",
-      notesList,
-      "meu objeto de agora",
-      notesObj
-    );
+  const editNote = (idNote) => {
+    let noteEdit = notesList.find((note) => {
+      return note.id === idNote;
+    });
+    setIsEditing(true);
+    setNotesObj(noteEdit);
+    setShowModal(true);
   };
 
-  console.log("Como tá minha lista: ", notesList);
+  const deleteNote = (idNote) => {
+    let updatedList = notesList.filter((note) => {
+      return note.id !== idNote;
+    });
 
-  // const deleteCustomer = (customer) => new Promise((resolve, reject) => {
-  //     setLoading(true)
-  //     main.deleteCustomer(customer).then(data => {
-  //         getCustomers()
-  //         setShowModal(false)
-  //         toast.success(data.message)
-  //         resolve()
-  //     }).catch(error => {
-  //         toast.error(error)
-  //         reject(error)
-  //     }).finally(() => {
-  //         setLoading(false)
-  //     })
-  // })
+    setNotesList(updatedList);
+    localStorage.setItem("arrayNotes", JSON.stringify(updatedList));
+  };
 
-  // const getCustomers = () => new Promise((resolve, reject) => {
-  //     setLoading(true)
-  //     main.getCustomers().then(data => {
-  //         setCustomerList(_.map(data, d => {
-  //             return {
-  //                 ...d,
-  //                 sexo: _.toUpper(d.sexo).indexOf("FEMALE") >= 0 ? "F" : "M",
-  //                 dataEmissao: moment(d.dataEmissao).format("yyyy-MM-DD"),
-  //                 orgaoExpedidor: _.sample(_.reject(orgaosExpedidoresList.orgao_emissor, o => o.value === "")).value
-  //             }
-  //         }))
-  //         navigate("/list")
-  //         resolve()
-  //     }).catch(error => {
-  //         toast.error(error)
-  //         reject(error)
-  //     }).finally(() => {
-  //         setLoading(false)
-  //     })
-  // })
+  const saveNote = () => {
+    if (!startValidation) {
+      setStartValidation(true);
+    }
 
-  // const getOrgaosExpedidores = () => new Promise((resolve, reject) => {
-  //     setLoading(true)
-  //     main.getOrgaosExpedidores().then(data => {
-  //         setOrgaosExpedidoresList(data[0])
-  //         resolve()
-  //     }).catch(error => {
-  //         toast.error(error)
-  //         reject(error)
-  //     }).finally(() => {
-  //         setLoading(false)
-  //     })
-  // })
+    if (validModal) {
+      if (isEditing) {
+        let newList = notesList.map((note) => {
+          if (note.id === notesObj.id) {
+            note = notesObj;
+          }
+          return note;
+        });
+        setNotesList(newList);
 
-  // //USE EFFECT HOOKS
-  // useEffect(() => {
-  //     const hydrate = async () => {
-  //         try {
-  //             console.log("orgaosExpedidoresList", orgaosExpedidoresList)
-  //             !orgaosExpedidoresList && await getOrgaosExpedidores()
-  //         }
-  //         catch (e) {
-  //             toast.error(e)
-  //         }
-  //     }
-  //     hydrate()
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // },[])
+        localStorage.setItem("arrayNotes", JSON.stringify(newList));
 
-  // useEffect(() => {
-  //     const emptyFields = _.values(customerObj).some(info => info === null)
-  //     setValidForm(!emptyFields)
-  // }, [customerObj])
+        setStartValidation(false);
+        setShowModal(false);
+      } else {
+        notesObj.id = notesList.length + 1;
 
-  const renderStore = isLoading ? (
-    <LoadingOverlay visible={true} />
-  ) : (
+        notesObj.date = new Date().toLocaleString("en-us", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        });
+        notesObj.read = false;
+        setNotesList([...notesList, notesObj]);
+        localStorage.setItem(
+          "arrayNotes",
+          JSON.stringify([...notesList, notesObj])
+        );
+        setStartValidation(false);
+        setShowModal(false);
+      }
+    }
+  };
+
+  const filteredNotesList = useMemo(() => {
+    if (filteredValue !== "" && filteredValue !== 0) {
+      return notesList.filter((note) => {
+        if (Number.isInteger(filteredValue)) {
+          return parseInt(note.category) === filteredValue;
+        } else {
+          return (
+            note.title.toUpperCase().indexOf(filteredValue.toUpperCase()) >= 0
+          );
+        }
+      });
+    } else {
+      return notesList;
+    }
+  }, [filteredValue, notesList]);
+
+  useEffect(() => {
+    if (notesList.length > 0) {
+      let completedNotes = notesList.filter((note) => {
+        return note.read !== false;
+      });
+      setReadNotes(completedNotes.length);
+    }
+  }, [notesList]);
+
+  useEffect(() => {
+    const emptyFields = notesObj.category === null;
+    setValidModal(!emptyFields);
+  }, [notesObj]);
+
+  useEffect(() => {
+    let dataCache = localStorage.getItem("arrayNotes");
+    if (dataCache !== null) {
+      setNotesList(JSON.parse(dataCache));
+    }
+  }, []);
+
+  const renderStore = (
     <NotesContext.Provider
       value={{
         notesObj,
@@ -265,9 +185,21 @@ export const NotesProvider = ({ children }) => {
         setShowModal,
         tabOptions,
         noteOptions,
-        addNote,
+        editNote,
         notesList,
+        setNotesList,
         newNote,
+        saveNote,
+        deleteNote,
+        readNotes,
+        filteredValue,
+        setFilteredValue,
+        filteredNotesList,
+        showConfirmation,
+        setShowConfirmation,
+        startValidation,
+        searchValue,
+        setSearchValue,
       }}
     >
       {children}

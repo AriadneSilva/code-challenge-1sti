@@ -2,13 +2,8 @@ import { React, useContext } from "react";
 import { Button } from "../components/Button";
 import { Tab } from "../components/Tab";
 import { Input } from "../components/Input";
-import { ModalCard } from "../components/ModalCard";
 import { View } from "../components/View";
-import { Text } from "../components/Text";
-import { ProgressBar } from "../components/ProgressBar";
-import { Select } from "../components/Select";
 import { Card } from "../components/Card";
-import { TextArea } from "../components/TextArea.jsx";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 import { ModalNotes } from "../containers/ModalNotes";
@@ -16,29 +11,42 @@ import { ModalNotes } from "../containers/ModalNotes";
 import { NotesContext } from "../stores/NotesStore";
 
 const Home = () => {
-  const { showModal, setShowModal, tabOptions, noteOptions, newNote } =
+  const { tabOptions, newNote, setFilteredValue, searchValue, setSearchValue } =
     useContext(NotesContext);
+
+  const onChangeTab = (e) => {
+    setFilteredValue(e);
+  };
+
+  const onChangeSearch = (e) => {
+    setSearchValue(e.target.value);
+    setFilteredValue(e.target.value);
+  };
 
   return (
     <>
-      <Card bg="gray" width="90%" alignItems="center">
+      <Card
+        bg="gray"
+        width="98%"
+        height="98%"
+        alignItems="center"
+        background="#F5F5F5"
+      >
         <View
           flexDirection="row"
           alignItems="center"
           justifyContent="center"
           mt={3}
         >
-          {" "}
           <Input
             name="search"
             data-testid="search"
-            value={""}
+            value={searchValue}
             icon={<SearchIcon />}
-            width="824px"
-            // onChange={onChangeCustomerInfo}
-            //  error={startValidation && !customerObj.rg}
-            //  message={startValidation && !customerObj.rg ? "Preencha o campo" : ""}
+            width="920px"
+            onChange={onChangeSearch}
             placeholder="Search notes..."
+            background="white"
           ></Input>
         </View>
         <View
@@ -49,20 +57,24 @@ const Home = () => {
           width="50%"
           p={10}
         >
-          <Tab options={tabOptions} selectedIndex={0} />
+          <Tab
+            options={tabOptions}
+            selectedIndex={0}
+            onChange={(e) => onChangeTab(e)}
+          />
+
           <Button
             type="primary"
-            width="25%"
+            width="128px"
             onClick={() => {
               newNote();
-              setShowModal(true);
             }}
           >
             <AddIcon /> ADD NOTE
           </Button>
         </View>
-        <ModalNotes mode={"add"} />
       </Card>
+      <ModalNotes />
     </>
   );
 };

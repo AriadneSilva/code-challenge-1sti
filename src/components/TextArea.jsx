@@ -82,16 +82,13 @@ const Wrapper = styled.label`
         : warning
         ? get(theme, "colors.warning")
         : "#E0E0E0"};
-      border-radius: ${get(theme, "radii.input", "4px")};
+      border-radius: ${get(theme, "radio.input", "4px")};
 
       &::placeholder {
         color: ${get(theme, "colors.lightGray", "#00000099")};
       }
 
-      &:hover,
-      &:focus {
-        border: ${get(theme, "borders.inputHovered", "2px solid #777777")};
-      }
+      &: hover;
     `}
 
     ${({ width, height }) =>
@@ -163,12 +160,12 @@ const TextArea = React.forwardRef(
             rows={rows}
             cols={cols}
           />
+          {message && (
+            <MessageWrapper success={success} error={error} warning={warning}>
+              {message}
+            </MessageWrapper>
+          )}{" "}
         </Wrapper>
-        {message && (
-          <MessageWrapper success={success} error={error} warning={warning}>
-            {message}
-          </MessageWrapper>
-        )}
       </Fragment>
     );
   }

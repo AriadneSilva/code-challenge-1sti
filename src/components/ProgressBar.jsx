@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { color, typography, layout } from "styled-system";
 import get from "lodash.get";
 import { Card } from "./Card";
-import { LoadingOverlay } from "./LoadingOverlay";
+
 
 const Wrapper = styled(Card)`
   ${color}
@@ -12,27 +12,27 @@ const Wrapper = styled(Card)`
 
   width: fit-content;
   font-weight: bold;
-  font-size: 2.5rem;
+  font-size: 18px;
+  background-color: transparent;
 
   progress {
-    /* Reset the default appearance */
     -webkit-appearance: none;
     appearance: none;
     width: ${({ width }) => width};
-    height: 2rem;
+    height: 4px;
     margin-top: 1rem;
   }
 
   progress::-webkit-progress-bar {
     ${({ theme }) => css`
-      background-color: ${get(theme, "colors.offWhite", "#f5f5f5")};
+      background-color: ${get(theme, "colors.progress", "#69bcff96")};
     `}
     border-radius: 1rem;
   }
 
   progress::-webkit-progress-value {
     ${({ theme, color }) => css`
-      background-color: ${get(theme, `colors.${color}`, "#667eea")};
+      background-color: ${get(theme, `colors.${color}`, "#2196F3")};
     `}
     border-radius: 1rem;
   }
@@ -68,12 +68,14 @@ const ProgressBar = React.forwardRef(
                 marginLeft: "2rem",
                 top: "1.5rem",
               }}
-            >
-              <LoadingOverlay visible size="4rem" />
-            </div>
+            ></div>
           )}
-          <div style={{ marginLeft: showLoading ? "4.5rem" : "0" }}>
-            {!hideValue && `${value}%`} {message || ""}
+          <div
+            style={{
+              marginLeft: showLoading ? "4.5rem" : "0",
+            }}
+          >
+            {message || ""}
           </div>
           <progress id="progressBar" max={max} value={value} {...rest} />
         </Wrapper>
@@ -86,7 +88,7 @@ ProgressBar.defaultProps = {
   max: 100,
   value: 0,
   type: "primary",
-  width: "50rem",
+  width: "55rem",
 };
 
 export { ProgressBar };

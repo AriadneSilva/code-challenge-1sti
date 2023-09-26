@@ -17,7 +17,7 @@ import get from "lodash.get";
 const Wrapper = styled.div`
   transition: all 0.2s ease;
   ${({ theme }) => css`
-    padding: ${get(theme, "parameters.cardPadding", "16px")};
+    padding: "${get(theme, "parameters.cardPadding", "16px")}";
   `}
   ${space}
   ${color}

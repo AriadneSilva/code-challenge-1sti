@@ -8,14 +8,15 @@ import { TextArea } from "../components/TextArea.jsx";
 
 import { NotesContext } from "../stores/NotesStore";
 
-const ModalNotes = (mode) => {
+const ModalNotes = () => {
   const {
     showModal,
     setShowModal,
     noteOptions,
     notesObj,
     setNotesObj,
-    addNote,
+    saveNote,
+    startValidation,
   } = useContext(NotesContext);
 
   const onChangeNotesInfo = (e) => {
@@ -26,10 +27,8 @@ const ModalNotes = (mode) => {
     setNotesObj({ ...stateNoteObj });
   };
 
-  const verSeSalvo = () => {
-    console.log("Meu objeto: ", notesObj);
-    addNote();
-    setShowModal(false);
+  const onAddButton = () => {
+    saveNote();
   };
 
   return (
@@ -58,13 +57,20 @@ const ModalNotes = (mode) => {
           mr={40}
           onChange={onChangeNotesInfo}
           placeholder="Add title..."
+          error={startValidation && !notesObj.title}
+          message={startValidation && !notesObj.title ? "Preencha o campo" : ""}
         ></Input>
         <Select
           options={noteOptions}
           width="247px"
           name="category"
           onChange={onChangeNotesInfo}
-          value={notesObj.category}
+          selectedValue={2}
+          value={parseInt(notesObj.category)}
+          error={startValidation && !notesObj.category}
+          message={
+            startValidation && !notesObj.category ? "Preencha o campo" : ""
+          }
         />
       </View>
       <View
@@ -77,10 +83,14 @@ const ModalNotes = (mode) => {
         <TextArea
           background="#F4F4F4"
           height="227px"
-          placeholder="Add descripton..." /*value={value} onChange={e => setValue(e.target.value)}*/
+          placeholder="Add descripton..."
           onChange={onChangeNotesInfo}
           name="description"
           value={notesObj.description}
+          error={startValidation && !notesObj.description}
+          message={
+            startValidation && !notesObj.description ? "Preencha o campo" : ""
+          }
         />
       </View>
       <View
@@ -107,7 +117,7 @@ const ModalNotes = (mode) => {
             color: "#2196F3",
           }}
           onClick={() => {
-            verSeSalvo();
+            onAddButton();
           }}
         >
           ADD

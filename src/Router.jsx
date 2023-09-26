@@ -1,10 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-//COMPONENTS
 import { View } from "./components/View";
 
-//PAGES
 import Home from "./pages/Home";
 
 const Router = () => {

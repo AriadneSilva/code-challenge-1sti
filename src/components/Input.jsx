@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import styled, { css } from "styled-components";
+import get from "lodash.get";
 import {
   space,
   color,
@@ -8,8 +9,6 @@ import {
   flexbox,
   background,
 } from "styled-system";
-import _ from "lodash";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { View } from "./View";
 
 const MessageWrapper = styled.div`
@@ -18,21 +17,20 @@ const MessageWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   text-align: left;
-  margin: 0;
+  margin-top: 4px;
   margin-bottom: 2rem;
-  font-size: 24px;
+  font-size: 16px;
   font-family: "Roboto";
   vertical-align: middle;
-  opacity: 0.6;
 
   ${({ theme }) => css`
     color: ${theme.colors.error};
 
     .message-icon {
-      min-width: ${_.get(theme, "fontSizes.1")};
-      width: ${_.get(theme, "fontSizes.1")};
-      min-height: ${_.get(theme, "fontSizes.1")};
-      height: ${_.get(theme, "fontSizes.1")};
+      min-width: ${get(theme, "fontSizes.1")};
+      width: ${get(theme, "fontSizes.1")};
+      min-height: ${get(theme, "fontSizes.1")};
+      height: ${get(theme, "fontSizes.1")};
       margin-right: 1rem;
     }
   `}
@@ -44,7 +42,6 @@ const Wrapper = styled.label`
   ${space}
 
   width: 100%;
-  //background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   opacity: 1;
   ${background}
@@ -65,6 +62,19 @@ const Wrapper = styled.label`
       }
     `}
 
+    ${({ theme, success, warning, error }) => css`
+      border: ${get(theme, "borders.input", "2px solid")};
+      border-color: ${success
+        ? get(theme, "colors.success")
+        : error
+        ? get(theme, "colors.error")
+        : warning
+        ? get(theme, "colors.warning")
+        : "#E0E0E0"};
+      border-radius: ${get(theme, "radii.input", "4px")};
+    `}
+}
+
   input {
     outline: 0;
     transition: all 0.2s ease;
@@ -74,11 +84,10 @@ const Wrapper = styled.label`
     ${flexbox}
     ${space}
     ${background}
-
-
     border: 0;
     margin-left: 15px;
-  }
+
+
 `;
 
 Wrapper.defaultProps = {
@@ -116,12 +125,7 @@ const Input = React.forwardRef(
             {icon !== "" ? icon : ""}
             <input value={value} onChange={onChange} {...rest} />
           </Wrapper>
-          {error && (
-            <MessageWrapper>
-              <ErrorOutlineIcon className="message-icon" color="error" />
-              {message}
-            </MessageWrapper>
-          )}
+          {error && <MessageWrapper>{message}</MessageWrapper>}
         </View>
       </Fragment>
     );

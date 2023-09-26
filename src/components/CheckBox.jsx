@@ -3,12 +3,13 @@ import styled, { css } from "styled-components";
 import { space, typography, layout, flexbox } from "styled-system";
 import get from "lodash.get";
 
+
 const Wrapper = styled.label`
   ${space}
   ${typography}
-  ${layout}
-  ${flexbox}
-  border: none;
+${layout}
+${flexbox}
+border: none;
   cursor: pointer;
 
   input {
@@ -24,26 +25,26 @@ const Wrapper = styled.label`
     box-sizing: border-box;
     ${({ theme }) => css`
       background-color: transparent;
-      margin-right: ${get(theme, "parameters.checkboxRightMargin", "16px")};
-      width: ${get(theme, "parameters.checkboxSize", "16px")};
-      height: ${get(theme, "parameters.checkboxSize", "16px")};
-      border: ${get(theme, "borders.checkbox", "2px solid #777777")};
-      border-radius: ${get(theme, "radii.checkbox", "4px")};
+      margin-right: 16px;
+      width: 18px;
+      height: 18px;
+      border: 2px solid white;
+      border-radius: 4px;
 
       &:hover {
-        background-color: ${get(theme, "colors.lightGray", "#777777")};
-        border: ${get(theme, "borders.checkboxHovered", "2px solid #303030")};
+        background-color: transparent;
+        border: 2px solid white;
       }
 
       &:after {
         transition: all 0.2s ease;
         content: "";
         position: absolute;
-        top: calc(${get(theme, "parameters.checkboxSize", "16px")} / 14);
-        left: calc(${get(theme, "parameters.checkboxSize", "16px")} / 4);
-        width: calc(${get(theme, "parameters.checkboxSize", "16px")} / 4);
-        height: calc(${get(theme, "parameters.checkboxSize", "16px")} / 2.2);
-        border: solid ${get(theme, "colors.white", "white")};
+        top: calc(16px / 14);
+        left: calc(16px / 4);
+        width: calc(16px / 4);
+        height: calc(16px / 2.2);
+        border: solid white;
         border-radius: 0.125rem;
         border-width: 0 0.25rem 0.25rem 0;
         background-color: transparent;
@@ -55,12 +56,12 @@ const Wrapper = styled.label`
 
   input:checked ~ span {
     ${({ theme }) => css`
-      background-color: ${get(theme, "colors.success", "#59e480")};
-      border: ${get(theme, "borders.checkboxChecked", "2px solid #59e480")};
+      background-color: ${get(theme, "colors.transparent", "#59e480")};
+      border: ${get(theme, "borders.transparent", "2px solid white")};
 
       &:hover {
-        border: ${get(theme, "borders.checkboxHovered", "2px solid #303030")};
-        background-color: ${get(theme, "colors.success", "#59e480")};
+        border: ${get(theme, "borders.checkboxHovered", "2px solid white")};
+        background-color: ${get(theme, "colors.transparent", "#59e480")};
       }
 
       &:after {
@@ -140,7 +141,6 @@ const Checkbox = React.forwardRef(
       py,
     };
 
-    // Remove undefined
     Object.keys(spacingProps).forEach((key) =>
       spacingProps[key] === undefined ? delete spacingProps[key] : {}
     );

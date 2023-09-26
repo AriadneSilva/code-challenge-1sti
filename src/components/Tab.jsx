@@ -31,14 +31,6 @@ const Tab = ({
     setSelectedTab(selectedIndex);
   }, [selectedIndex]);
 
-  const getBorderRadius = (isFirst, isLast) => {
-    if (isFirst) {
-      return direction === "horizontal" ? "4px 0 0 4px" : "4px 4px 0 0";
-    } else if (isLast) {
-      return direction === "horizontal" ? "0 4px 4px 0" : "0 0 4px 4px";
-    }
-    return "0";
-  };
 
   const renderButtons = () => {
     return options.map((option, index) => {
